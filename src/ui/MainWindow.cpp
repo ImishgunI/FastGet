@@ -22,8 +22,8 @@ void MainWindow::setupUI() { createMenu(); }
 
 void MainWindow::createMenu() {
     QAction* quit = new QAction("&Quit", this);
-    _m = menuBar()->addMenu("&File");
-    _m->addAction(quit);
+    auto* file = menuBar()->addMenu("&File");
+    file->addAction(quit);
     connect(quit, &QAction::triggered, qApp, &QApplication::quit);
-    _m = menuBar()->addMenu("&Settings");
+    auto* settings = menuBar()->addMenu("&Settings");
 }
