@@ -12,8 +12,4 @@ public:
 private:
   void setupUI();
   void createMenu();
-
-private:
-  QMenu *_m;
-  QAction *_a1;
 };
