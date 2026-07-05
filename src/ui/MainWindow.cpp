@@ -49,7 +49,6 @@ void MainWindow::createToolBar() {
 void MainWindow::addAction() {
     QWidget* addWindow = new QWidget();
     addWindow->setWindowTitle("Add new download");
-    addWindow->resize(300, 200);
     QLabel* url = new QLabel("&URL:");
     QLineEdit* url_line = new QLineEdit;
     url->setBuddy(url_line);
