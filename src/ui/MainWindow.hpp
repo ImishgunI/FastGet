@@ -2,7 +2,7 @@
 
 #include <QMainWindow>
 #include <QApplication>
-#include <qaction.h>
+#include <QString>
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -14,10 +14,10 @@ private:
   void setupUI();
   void createMenu();
   void createToolBar();
-  static void addAction();
-  static void startAction();
-  static void pauseAction();
-  static void removeAction();
+  void addAction();
+  void startAction();
+  void pauseAction();
+  void removeAction();
 
 private:
   QAction* add;
