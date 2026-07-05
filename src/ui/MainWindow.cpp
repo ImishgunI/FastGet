@@ -1,6 +1,9 @@
 #include "MainWindow.hpp"
 #include <QMenuBar>
-
+#include <QToolBar>
+#include <qaction.h>
+#include <qnamespace.h>
+#include <qwidget.h>
 //    +---------------------------------------------------------------+
 //    | File                    Settings                              |
 //    +---------------------------------------------------------------+
@@ -18,7 +21,10 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) { setupUI(); }
 
-void MainWindow::setupUI() { createMenu(); }
+void MainWindow::setupUI() { 
+    createMenu();
+    createToolBar();
+}
 
 void MainWindow::createMenu() {
     QAction* quit = new QAction("&Quit", this);
@@ -26,4 +32,35 @@ void MainWindow::createMenu() {
     file->addAction(quit);
     connect(quit, &QAction::triggered, qApp, &QApplication::quit);
     auto* settings = menuBar()->addMenu("&Settings");
+}
+
+void MainWindow::createToolBar() {
+    QToolBar* toolbar = addToolBar("main toolbar");
+    add = toolbar->addAction("+ Add");
+    connect(add,  &QAction::triggered, this, &MainWindow::addAction);
+    start = toolbar->addAction("Start");
+    connect(start, &QAction::triggered, this, &MainWindow::startAction);
+    pause = toolbar->addAction("Pause");
+    connect(pause, &QAction::triggered, this, &MainWindow::pauseAction);
+    remove = toolbar->addAction("Remove");
+    connect(remove, &QAction::triggered, this, &MainWindow::removeAction);
+}
+
+void MainWindow::addAction() {
+    QWidget* addWindow = new QWidget();
+    addWindow->setWindowTitle("Add new download");
+    addWindow->resize(800, 600);
+    addWindow->show();
+}
+
+void MainWindow::startAction() {
+
+}
+
+void MainWindow::pauseAction() {
+
+}
+
+void MainWindow::removeAction() {
+
 }
