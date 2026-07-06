@@ -12,6 +12,8 @@ qt_add_executable(DownloadManager
     src/main.cpp
     src/ui/MainWindow.cpp
     src/ui/MainWindow.hpp
+    src/ui/AddDownload.cpp
+    src/ui/AddDownload.hpp
 )
 
 target_link_libraries(
