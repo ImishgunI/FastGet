@@ -3,6 +3,8 @@
 #include <QLineEdit>
 #include <QBoxLayout>
 #include <QPushButton>
+#include <qboxlayout.h>
+#include <qpushbutton.h>
 
 AddDownloadDialog::AddDownloadDialog(QWidget* parent) : QDialog(parent) {
     setWindowTitle("Add New Download");
@@ -10,14 +12,18 @@ AddDownloadDialog::AddDownloadDialog(QWidget* parent) : QDialog(parent) {
     QLabel* url = new QLabel("&URL:", this);
     QLineEdit* url_line = new QLineEdit(this);
     url->setBuddy(url_line);
-    QLabel* save_path = new QLabel("&Save:", this);
-    QLineEdit* save_path_line = new QLineEdit(this);
-    save_path->setBuddy(save_path_line);
     QVBoxLayout* bl = new QVBoxLayout(this);
     bl->addWidget(url);
     bl->addWidget(url_line);
+    QLabel* save_path = new QLabel("&Save:", this);
     bl->addWidget(save_path);
-    bl->addWidget(save_path_line);
+    QLineEdit* save_path_line = new QLineEdit(this);
+    save_path->setBuddy(save_path_line);
+    QPushButton* browse = new QPushButton("&Browse", this);
+    QHBoxLayout* save_box = new QHBoxLayout(this);
+    save_box->addWidget(save_path_line);
+    save_box->addWidget(browse);
+    bl->addLayout(save_box);
     QHBoxLayout* buttons_box = new QHBoxLayout(this);
     QPushButton* cancel_button = new QPushButton("&Cancel", this);
     buttons_box->addWidget(cancel_button);
