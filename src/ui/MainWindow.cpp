@@ -46,6 +46,8 @@ void MainWindow::createToolBar() {
 
 void MainWindow::addAction() {
     AddDownloadDialog ad(this);
+
+    ad.exec();
 }
 
 void MainWindow::startAction() {
