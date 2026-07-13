@@ -54,10 +54,10 @@ QString AddDownloadDialog::fileNameFromUrl() {
     return url_path.fileName();
 }
 
-QString AddDownloadDialog::url() const {
+QString AddDownloadDialog::getUrl() const {
     return url_line->text();
 }
 
-QString AddDownloadDialog::savePath() const {
+QString AddDownloadDialog::getSavePath() const {
     return save_path_line->text();
 }

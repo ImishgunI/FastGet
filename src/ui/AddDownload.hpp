@@ -9,8 +9,8 @@ public:
     explicit AddDownloadDialog(QWidget *parent = nullptr);
     ~AddDownloadDialog() override = default;
 
-    QString url() const;
-    QString savePath() const;
+    QString getUrl() const;
+    QString getSavePath() const;
 
 private:
     void browseSaveDir();
