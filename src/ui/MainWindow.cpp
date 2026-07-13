@@ -46,8 +46,9 @@ void MainWindow::createToolBar() {
 
 void MainWindow::addAction() {
     AddDownloadDialog ad(this);
-
-    ad.exec();
+    if(ad.exec() == QDialog::Accepted) {
+        manager->addTask(ad.getUrl(), ad.getSavePath());
+    }
 }
 
 void MainWindow::startAction() {
