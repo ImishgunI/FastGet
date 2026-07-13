@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QApplication>
 #include <QString>
+#include "../core/DownloadManager.hpp"
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -24,4 +25,5 @@ private:
   QAction* start;
   QAction* pause;
   QAction* remove;
+  DownloadManager* manager;
 };
