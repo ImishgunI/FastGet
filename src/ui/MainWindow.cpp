@@ -2,6 +2,8 @@
 #include "AddDownload.hpp"
 #include <QMenuBar>
 #include <QToolBar>
+#include <QTableWidget>
+#include <QHeaderView>
 //    +---------------------------------------------------------------+
 //    | File                    Settings                              |
 //    +---------------------------------------------------------------+
@@ -22,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) { setupUI(); }
 void MainWindow::setupUI() { 
     createMenu();
     createToolBar();
+    createTableView();
 }
 
 void MainWindow::createMenu() {
@@ -42,6 +45,15 @@ void MainWindow::createToolBar() {
     connect(pause, &QAction::triggered, this, &MainWindow::pauseAction);
     remove = toolbar->addAction("Remove");
     connect(remove, &QAction::triggered, this, &MainWindow::removeAction);
+}
+
+void MainWindow::createTableView() {
+    QTableWidget* table = new QTableWidget(0, 5);
+    QStringList headers = {"Name","Status", "Speed", "DownloadedBytes", "TotalBytes" };
+    table->setHorizontalHeaderLabels(headers);
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    table->horizontalHeader()->setDefaultSectionSize(140);
+    setCentralWidget(table);
 }
 
 void MainWindow::addAction() {
