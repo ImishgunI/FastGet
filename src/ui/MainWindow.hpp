@@ -15,6 +15,7 @@ private:
   void setupUI();
   void createMenu();
   void createToolBar();
+  void createTableView();
   void addAction();
   void startAction();
   void pauseAction();
