@@ -24,8 +24,8 @@ public:
     void setTotalBytes(quint64 tbytes);
     void setSpeed(double speed);
 
-    QUrl getUrl() const;
-    QString getSavePath() const;
+    const QUrl& getUrl() const;
+    const QString& getSavePath() const;
     DownloadStatus getStatus() const;
     quint64 getDownloadedBytes() const;
     quint64 getTotalBytes() const;
