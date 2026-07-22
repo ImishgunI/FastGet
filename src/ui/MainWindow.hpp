@@ -3,6 +3,8 @@
 #include <QMainWindow>
 #include <QApplication>
 #include <QString>
+#include <QTableWidget>
+#include <unordered_map>
 #include "../core/DownloadManager.hpp"
 
 class MainWindow : public QMainWindow {
@@ -20,11 +22,15 @@ private:
   void startAction();
   void pauseAction();
   void removeAction();
+  void addNewRow(const DownloadTask& task);
+  void updateRow(DownloadTask& task);
 
 private:
   QAction* add;
   QAction* start;
   QAction* pause;
   QAction* remove;
-  DownloadManager* manager;
+  DownloadManager manager;
+  QTableWidget* table;
+  std::unordered_map<DownloadTask*, int> rows;
 };
