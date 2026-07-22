@@ -23,11 +23,11 @@ void DownloadTask::setSpeed(double speed) {
     this->speed = speed;
 }
 
-QUrl DownloadTask::getUrl() const {
+const QUrl& DownloadTask::getUrl() const {
     return url;
 }
 
-QString DownloadTask::getSavePath() const {
+const QString& DownloadTask::getSavePath() const {
     return savePath;
 }
 
@@ -40,7 +40,7 @@ quint64 DownloadTask::getDownloadedBytes() const {
 }
 
 quint64 DownloadTask::getTotalBytes() const {
-    return totalBytes;
+    return totalBytes / 1000000;
 }
 
 double DownloadTask::getSpeed() const {
