@@ -1,9 +1,10 @@
 #include "MainWindow.hpp"
 #include "AddDownload.hpp"
+#include "DownloadStatusUtils.hpp"
 #include <QMenuBar>
 #include <QToolBar>
-#include <QTableWidget>
 #include <QHeaderView>
+#include <format>
 //    +---------------------------------------------------------------+
 //    | File                    Settings                              |
 //    +---------------------------------------------------------------+
@@ -19,9 +20,12 @@
 //    +---------------------------------------------------------------+
 
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) { setupUI(); }
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), manager() {
+    setupUI(); 
+    connect(&manager, &DownloadManager::taskUpdated, this, &MainWindow::updateRow);
+}
 
-void MainWindow::setupUI() { 
+void MainWindow::setupUI() {
     createMenu();
     createToolBar();
     createTableView();
@@ -48,23 +52,31 @@ void MainWindow::createToolBar() {
 }
 
 void MainWindow::createTableView() {
-    QTableWidget* table = new QTableWidget(0, 5);
+    table = new QTableWidget(0, 5, this);
     QStringList headers = {"Name","Status", "Speed", "DownloadedBytes", "TotalBytes" };
     table->setHorizontalHeaderLabels(headers);
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-    table->horizontalHeader()->setDefaultSectionSize(140);
+    table->horizontalHeader()->resizeSection(0, 75);
+    table->horizontalHeader()->resizeSection(1, 75);
+    table->horizontalHeader()->resizeSection(2, 75);
+    table->horizontalHeader()->resizeSection(3, 140);
+    table->horizontalHeader()->resizeSection(4, 100);
+    table->setSortingEnabled(false);
     setCentralWidget(table);
 }
 
 void MainWindow::addAction() {
     AddDownloadDialog ad(this);
     if(ad.exec() == QDialog::Accepted) {
-        manager->addTask(ad.getUrl(), ad.getSavePath());
+        auto task = manager.addTask(ad.getUrl(), ad.getSavePath());
+        int row = table->rowCount();
+        rows[&task] = row;
+        addNewRow(task);
     }
 }
 
 void MainWindow::startAction() {
-
+    manager.startTask(table->currentRow());
 }
 
 void MainWindow::pauseAction() {
@@ -72,5 +84,24 @@ void MainWindow::pauseAction() {
 }
 
 void MainWindow::removeAction() {
+    manager.removeTask(table->currentRow());
+    manager.eraseVector(table->currentRow());
+}
 
+void MainWindow::addNewRow(const DownloadTask& task) {
+    int indexRow = table->rowCount();
+    table->insertRow(indexRow);
+    table->setItem(indexRow, 0, new QTableWidgetItem(task.getUrl().fileName()));
+    table->setItem(indexRow, 1, new QTableWidgetItem(downloadStatusToString(task.getStatus())));
+    table->setItem(indexRow, 2, new QTableWidgetItem(std::format("{} KB/s", task.getSpeed()).c_str()));
+    table->setItem(indexRow, 3, new QTableWidgetItem(std::format("{} B/s", task.getDownloadedBytes()).c_str()));
+    table->setItem(indexRow, 4, new QTableWidgetItem(std::format("{} MB", task.getTotalBytes()).c_str()));
+}
+
+void MainWindow::updateRow(DownloadTask& task) {
+    int row = rows[&task];
+    table->item(row, 1)->setText(downloadStatusToString(task.getStatus()));
+    table->item(row, 2)->setText(std::format("{:.2f} KB/s", task.getSpeed()).c_str());
+    table->item(row, 3)->setText(std::format("{} B/s", task.getDownloadedBytes()).c_str());
+    table->item(row, 4)->setText(std::format("{} MB", task.getTotalBytes()).c_str());
 }
