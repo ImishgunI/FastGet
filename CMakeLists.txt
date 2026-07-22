@@ -14,6 +14,8 @@ qt_add_executable(DownloadManager
     src/ui/MainWindow.hpp
     src/ui/AddDownload.cpp
     src/ui/AddDownload.hpp
+    src/ui/DownloadStatusUtils.hpp
+    src/ui/DownloadStatusUtils.cpp
     src/core/DownloadTask.hpp
     src/core/DownloadTask.cpp
     src/core/DownloadManager.hpp
